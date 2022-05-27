@@ -7,6 +7,9 @@ import (
 	"syscall"
 )
 
+// index文件形式：
+// key:value\n
+
 // Set by file size
 // if to big, will be painc()
 const defaultMemMapSize = 128 * (1 << 20) // 假设映射的内存大小为 128M
@@ -44,7 +47,9 @@ func Index_split(Index []byte) (str []string) {
 }
 
 func Index_fmt(Index []byte) {
-	fmt.Println(Index_split(Index))
+	str := strings.Split(Index_split(Index)[0], ",")
+	fmt.Println(str[0])
+	fmt.Println(str[1])
 }
 
 // Todo

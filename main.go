@@ -1,7 +1,7 @@
 package main
 
 import (
-	"engine_utils/uilt"
+	"engine_utils/uilts"
 	"os"
 )
 
