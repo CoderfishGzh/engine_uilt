@@ -66,7 +66,7 @@ func TestSkipListBasicCRUD(t *testing.T) {
 func Benchmark_SkipListBasicCRUD(b *testing.B) {
 	list := NewSkipList()
 	key, val := "", ""
-	maxTime := 1000000
+	maxTime := 10000000
 	for i := 0; i < maxTime; i++ {
 		//number := rand.Intn(10000)
 		key, val = fmt.Sprintf("Key%d", i), fmt.Sprintf("Val%d", i)
@@ -80,7 +80,7 @@ func Benchmark_SkipListBasicCRUD(b *testing.B) {
 }
 
 func TestConcurrentBasic(t *testing.T) {
-	const n = 1000
+	const n = 10000000
 	l := NewSkipList()
 	var wg sync.WaitGroup
 	key := func(i int) []byte {
@@ -112,7 +112,7 @@ func TestConcurrentBasic(t *testing.T) {
 }
 
 func Benchmark_ConcurrentBasic(b *testing.B) {
-	const n = 1000
+	const n = 10000000
 	l := NewSkipList()
 	var wg sync.WaitGroup
 	key := func(i int) []byte {

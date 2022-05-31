@@ -1,6 +1,5 @@
 package uilt
 
-//
 import (
 	"bytes"
 	"engine_utils/codec"
@@ -38,8 +37,6 @@ func NewSkipList() *SkipList {
 		curmaxLevel: 0,
 	}
 
-	//implement me here!!!
-	//return nil
 }
 
 //跳表节点结构
