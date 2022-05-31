@@ -2,6 +2,8 @@ package uilt
 
 import (
 	"fmt"
+	"io/fs"
+	_ "io/fs"
 	"os"
 	"strings"
 	"syscall"
@@ -13,9 +15,12 @@ import (
 // Set by file size
 // if to big, will be painc()
 const defaultMemMapSize = 128 * (1 << 20) // 假设映射的内存大小为 128M
+// 索引文件信息
+var Index_Info fs.FileInfo
 
 func Index_file_init() (Fd *os.File, Index []byte) {
 	var err error
+	Index_Info, err = os.Stat("./something")
 	// en index file
 	Fd, err = os.OpenFile(
 		"./something",
@@ -30,7 +35,8 @@ func Index_file_init() (Fd *os.File, Index []byte) {
 	Index, err = syscall.Mmap(
 		int(Fd.Fd()),
 		0,
-		1<<8,
+		// 1<<8,
+		int(Index_Info.Size()),
 		syscall.PROT_READ,
 		syscall.MAP_SHARED,
 	)
@@ -41,18 +47,20 @@ func Index_file_init() (Fd *os.File, Index []byte) {
 	return Fd, Index
 }
 
-func Index_split(Index []byte) (str []string) {
+// Index_split_ine
+// 返回以\n切分的倒排索引数组
+func Index_split_line(Index []byte) (str []string) {
 	str = strings.Split(string(Index), "\n")
 	return str
 }
 
+// Index_split_comma
+// 根据传入的Index字符串数组，返回(key，value)对
+//func Index_split_comma(Index []string) (key []string, value []string) {
+//
+//}
+
 func Index_fmt(Index []byte) {
-	str := strings.Split(Index_split(Index)[0], ",")
-	fmt.Println(str[0])
-	fmt.Println(str[1])
-}
-
-// Todo
-func Index_insert(Index []byte) {
-
+	fmt.Println(len(Index))
+	fmt.Println(Index_split_line(Index)[1])
 }
