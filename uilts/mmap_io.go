@@ -1,7 +1,6 @@
 package uilt
 
 import (
-	"fmt"
 	"io/fs"
 	_ "io/fs"
 	"os"
@@ -10,20 +9,21 @@ import (
 )
 
 // index文件形式：
-// key:value\n
+// key,[value]\n
 
 // Set by file size
-// if to big, will be painc()
+// Todo 内存有换页机制，映射时间长了，可能会被换走
 const defaultMemMapSize = 128 * (1 << 20) // 假设映射的内存大小为 128M
+
 // 索引文件信息
 var Index_Info fs.FileInfo
 
 func Index_file_init() (Fd *os.File, Index []byte) {
 	var err error
-	Index_Info, err = os.Stat("./something")
+	Index_Info, err = os.Stat("/home/oem/下载/dictionary1.txt")
 	// en index file
 	Fd, err = os.OpenFile(
-		"./something",
+		"/home/oem/下载/dictionary1.txt",
 		os.O_RDONLY,
 		0644,
 	)
@@ -37,30 +37,32 @@ func Index_file_init() (Fd *os.File, Index []byte) {
 		0,
 		// 1<<8,
 		int(Index_Info.Size()),
+		//defaultMemMapSize,
 		syscall.PROT_READ,
 		syscall.MAP_SHARED,
 	)
 	if err != nil {
 		panic(err)
 	}
-
 	return Fd, Index
 }
 
-// Index_split_ine
-// 返回以\n切分的倒排索引数组
-func Index_split_line(Index []byte) (str []string) {
-	str = strings.Split(string(Index), "\n")
+// Index_by_enter
+// 返回索引所有的kv对
+func Index_by_enter(Index []byte) []string {
+	str := strings.Split(string(Index), "\n")
 	return str
 }
 
-// Index_split_comma
-// 根据传入的Index字符串数组，返回(key，value)对
-//func Index_split_comma(Index []string) (key []string, value []string) {
-//
-//}
+// Separation_kv
+// 从kv对中分离key和value
+func Separation_kv(kv_pair string) (key []byte, value []byte, ret int) {
+	str := strings.Split(kv_pair, ",")
 
-func Index_fmt(Index []byte) {
-	fmt.Println(len(Index))
-	fmt.Println(Index_split_line(Index)[1])
+	if len(str) < 2 {
+		return key, value, 0
+	}
+	key = []byte(str[0])
+	value = []byte(str[1])
+	return key, value, 1
 }

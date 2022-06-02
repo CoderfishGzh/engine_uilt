@@ -79,8 +79,9 @@ func Benchmark_SkipListBasicCRUD(b *testing.B) {
 	}
 }
 
+// 并发测试
 func TestConcurrentBasic(t *testing.T) {
-	const n = 10000000
+	const n = 10000
 	l := NewSkipList()
 	var wg sync.WaitGroup
 	key := func(i int) []byte {
@@ -111,8 +112,9 @@ func TestConcurrentBasic(t *testing.T) {
 	wg.Wait()
 }
 
+// 并发压测：
 func Benchmark_ConcurrentBasic(b *testing.B) {
-	const n = 10000000
+	const n = 10000
 	l := NewSkipList()
 	var wg sync.WaitGroup
 	key := func(i int) []byte {
@@ -142,3 +144,5 @@ func Benchmark_ConcurrentBasic(b *testing.B) {
 	}
 	wg.Wait()
 }
+
+
