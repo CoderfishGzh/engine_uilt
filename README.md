@@ -21,3 +21,4 @@ cpu: AMD Ryzen 7 5800H with Radeon Graphics
 Todo：
 (1)参考redis高效的randlevel算法   
 (2)更高效的查询算法   
+

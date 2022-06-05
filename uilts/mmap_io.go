@@ -56,6 +56,7 @@ func Index_by_enter(Index []byte) []string {
 
 // Separation_kv
 // 从kv对中分离key和value
+// 成功返回1，失败返回0
 func Separation_kv(kv_pair string) (key []byte, value []byte, ret int) {
 	str := strings.Split(kv_pair, ",")
 
@@ -65,4 +66,15 @@ func Separation_kv(kv_pair string) (key []byte, value []byte, ret int) {
 	key = []byte(str[0])
 	value = []byte(str[1])
 	return key, value, 1
+}
+
+// Separation_value
+// 划分value中的docid
+func Separation_value(values_be string) (docids []string) {
+	// 切分[docid1 docid2],取出docic数组
+	values_l := strings.Split(values_be, "[")
+	values := strings.Split(values_l[1], "]")
+	// 切分docid1 docid2,取出docic数组
+	docids = strings.Split(values[0], " ")
+	return docids
 }

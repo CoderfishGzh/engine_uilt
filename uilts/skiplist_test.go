@@ -75,7 +75,6 @@ func Benchmark_SkipListBasicCRUD(b *testing.B) {
 		assert.Equal(b, res, nil)
 		searchVal := list.Search([]byte(key))
 		assert.Equal(b, searchVal.Value, []byte(val))
-
 	}
 }
 
