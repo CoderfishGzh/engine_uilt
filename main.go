@@ -14,13 +14,7 @@ var Fd *os.File
 var Index []byte
 var Kv_pair []string
 
-func testDB() {
-	DB.MysqlInit()
-	fmt.Println(DB.Get_docid_value("1").Url)
-}
-
 func main() {
-	testDB()
 
 	DB.MysqlInit()
 
@@ -46,9 +40,11 @@ func main() {
 
 	docids := uilt.Separation_value(string(search_value))
 	var Docs []model.Docs
-	for _, docid := range docids {
-		Docs = append(Docs, DB.Get_docid_value(docid))
-	}
+	Docs = DB.Get_docid_value(docids)
+
+	//for _, docid := range docids {
+	//	Docs = append(Docs, DB.Get_docid_value(docid))
+	//}
 
 	for _, doc := range Docs {
 		fmt.Println(doc)

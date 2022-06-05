@@ -38,7 +38,7 @@ func MysqlInit() {
 }
 
 // 通过docid到mysql中查找对应的关系model
-func Get_docid_value(docid string) (doc model.Docs) {
-	DB.Where("id = ?", docid).First(&doc)
-	return doc
+func Get_docid_value(docids []string) (docs []model.Docs) {
+	DB.Where("id IN (?)", docids).Find(&docs)
+	return docs
 }

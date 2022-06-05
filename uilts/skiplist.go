@@ -164,6 +164,7 @@ func (list *SkipList) calcScore(key []byte) (score float64) {
 	return
 }
 
+// 比较 score
 // compare 等于0，小于-1， 大于1
 func (list *SkipList) compare(score float64, key []byte, next *Element) int {
 	//implement me here!!!
@@ -198,8 +199,3 @@ func (list *SkipList) Size() int64 {
 	//implement me here!!!
 	return list.size
 }
-
-
-
-
-
